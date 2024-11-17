@@ -1,0 +1,124 @@
+<html>
+    <head>
+        {{> head}}
+    </head>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* General reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .gameinvite {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .gameinvite:hover {
+            transform: scale(1.03);
+        }
+
+        .gameinvite h2 {
+            color: #333;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        #codeInput {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            outline: none;
+            transition: border 0.3s ease-in-out;
+        }
+
+        #codeInput:focus {
+            border-color: #4CAF50;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 20px;
+            font-size: 1.2rem;
+            margin: 10px 0;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #errorMessage {
+            color: red;
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+
+        @media screen and (max-width: 768px) {
+            .gameinvite {
+                padding: 30px;
+            }
+
+            .gameinvite h2 {
+                font-size: 1.6rem;
+            }
+
+            #codeInput {
+                font-size: 1.1rem;
+                padding: 12px;
+            }
+
+            button {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+    <body>
+       <div class="gameinvite">
+        <h2>Game code</h2>
+        <input type="text" id="codeInput" style="height: 55px;margin-bottom: 14px;">
+        <button style="font-size: larger;" id="createGame">Create game</button>
+        <button style="font-size: larger;" id="joinGame">Join game</button>
+        <div style="color: red" id="errorMessage"></div>
+
+       </div>
+        <script>
+            $('#createGame').on('click', function() {
+                window.location.replace('/white?code=' + $('#codeInput').val());
+            });
+            $('#joinGame').on('click', function() {
+                window.location.replace('/black?code=' + $('#codeInput').val());
+            });
+
+            var urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('error') == 'invalidCode') {
+                $('#errorMessage').text('Invalid invite code');
+            }
+        </script>
+    </body>
+</html>
